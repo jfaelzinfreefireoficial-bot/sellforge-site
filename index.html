@@ -1,0 +1,452 @@
+<html style="margin:0;padding:0;">
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = `
+    :root{
+      --bg:#000000;
+      --card:#0c0c0c;
+      --card-alt:#141414;
+      --text:#ffffff;
+      --muted:#a8a8a8;
+      --accent:#d4af37;
+      --accent-soft:rgba(212,175,55,.10);
+      --border:rgba(212,175,55,.15);
+      --border-gold:rgba(212,175,55,.3)
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      background:var(--bg);color:var(--text);
+      font-family:'Source Sans 3',sans-serif;
+      position:relative;overflow-x:hidden;
+    }
+    .font-display{font-family:'Cormorant Garamond',serif}
+
+    /* WRAPPER + FUNDO ANIMADO */
+    .page-wrapper{
+      position:relative;min-height:100%;width:100%;
+      background:
+        radial-gradient(900px 500px at 85% -10%,rgba(212,175,55,.10),transparent 60%),
+        radial-gradient(700px 400px at 5% 5%,rgba(212,175,55,.06),transparent 55%),
+        var(--bg);
+      overflow:hidden;
+    }
+    .particula{
+      position:absolute;width:3px;height:3px;border-radius:50%;
+      background:rgba(212,175,55,.4);
+      animation:flutuar 20s linear infinite;
+      pointer-events:none;
+    }
+    .particula:nth-child(1){left:8%;top:15%;animation-duration:24s;animation-delay:0s}
+    .particula:nth-child(2){left:22%;top:55%;width:2px;height:2px;animation-duration:30s;animation-delay:2s}
+    .particula:nth-child(3){left:38%;top:8%;animation-duration:21s;animation-delay:4s}
+    .particula:nth-child(4){left:52%;top:70%;width:4px;height:4px;animation-duration:27s;animation-delay:1s}
+    .particula:nth-child(5){left:68%;top:25%;animation-duration:32s;animation-delay:3s}
+    .particula:nth-child(6){left:82%;top:60%;width:2px;height:2px;animation-duration:23s;animation-delay:5s}
+    .particula:nth-child(7){left:12%;top:80%;animation-duration:28s;animation-delay:2s}
+    .particula:nth-child(8){left:88%;top:12%;width:3px;height:3px;animation-duration:25s;animation-delay:4s}
+    .particula:nth-child(9){left:45%;top:40%;width:2px;height:2px;animation-duration:26s;animation-delay:6s}
+    .particula:nth-child(10){left:75%;top:85%;animation-duration:22s;animation-delay:1s}
+    @keyframes flutuar{
+      0%{transform:translateY(0) translateX(0);opacity:.2}
+      50%{transform:translateY(-80px) translateX(40px);opacity:.7}
+      100%{transform:translateY(-160px) translateX(-20px);opacity:.2}
+    }
+
+    .conteudo{position:relative;z-index:2}
+
+    .reveal{opacity:0;transform:translateY(24px);animation:fadeUp .8s ease forwards}
+    .reveal:nth-child(2){animation-delay:.15s}
+    .reveal:nth-child(3){animation-delay:.3s}
+    .reveal:nth-child(4){animation-delay:.45s}
+    .reveal:nth-child(5){animation-delay:.6s}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+    .gradient-text{
+      background:linear-gradient(100deg,#8a6a1c,var(--accent),#f5e6a8,#fff,var(--accent),#8a6a1c);
+      background-size:300% auto;
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      animation:shine 6s linear infinite
+    }
+    @keyframes shine{0%{background-position:0% center}100%{background-position:300% center}}
+
+    .card-hover{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+    .card-hover:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 15px 45px rgba(212,175,55,.15)}
+
+    /* BOTÃO OFERTAS */
+    .btn-oferta{
+      display:inline-block;padding:18px 48px;border-radius:50px;
+      background:linear-gradient(135deg,var(--accent),#f0d060);
+      color:#000;font-weight:700;font-size:1rem;letter-spacing:.03em;
+      text-decoration:none;border:none;cursor:pointer;
+      animation:ofertaPulse 2.2s ease-in-out infinite;
+      transition:transform .25s ease;
+      text-transform:uppercase;box-shadow:0 4px 25px rgba(212,175,55,.35);
+    }
+    .btn-oferta:hover{transform:scale(1.05)}
+    @keyframes ofertaPulse{
+      0%{box-shadow:0 0 0 0 rgba(212,175,55,.55)}
+      70%{box-shadow:0 0 0 22px rgba(212,175,55,0)}
+      100%{box-shadow:0 0 0 0 rgba(212,175,55,0)}
+    }
+
+    /* BOTÕES ABSOLUTOS */
+    .btn-menu{
+      position:absolute;top:20px;left:20px;z-index:100;
+      width:48px;height:48px;border-radius:12px;
+      background:#111;border:1px solid var(--border);
+      color:var(--accent);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .25s ease;box-shadow:0 2px 15px rgba(0,0,0,.5);
+    }
+    .btn-menu:hover{background:var(--accent-soft);border-color:var(--accent)}
+
+    .btn-whatsapp-topo{
+      position:absolute;top:20px;right:20px;z-index:90;
+      width:48px;height:48px;border-radius:50%;
+      background:linear-gradient(135deg,#128c7e,#25d366);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;text-decoration:none;border:none;
+      transition:transform .2s ease;box-shadow:0 4px 20px rgba(37,211,102,.4);
+    }
+    .btn-whatsapp-topo:hover{transform:scale(1.1)}
+
+    /* MENU LATERAL */
+    .menu-lateral{
+      position:absolute;top:0;left:0;width:300px;min-height:100%;
+      background:linear-gradient(180deg,#0f0f0f,#050505);
+      border-right:1px solid var(--border);
+      z-index:200;transform:translateX(-100%);
+      transition:transform .35s ease;padding:28px 22px;
+      display:flex;flex-direction:column;gap:14px;
+      box-shadow:4px 0 30px rgba(0,0,0,.6);
+    }
+    .menu-lateral.aberto{transform:translateX(0)}
+    .overlay-menu{
+      position:absolute;inset:0;background:rgba(0,0,0,.75);
+      z-index:150;opacity:0;pointer-events:none;
+      transition:opacity .3s ease;
+    }
+    .overlay-menu.visivel{opacity:1;pointer-events:auto}
+    .btn-fechar{
+      align-self:flex-end;width:38px;height:38px;border-radius:10px;
+      background:#1a1a1a;border:1px solid var(--border);
+      color:#fff;cursor:pointer;font-size:1.2rem;font-weight:600;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .2s ease;
+    }
+    .btn-fechar:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+
+    .menu-link{
+      color:#fff;text-decoration:none;padding:11px 14px;
+      border-radius:10px;transition:all .2s ease;font-size:.95rem;
+      display:flex;align-items:center;gap:10px;
+    }
+    .menu-link:hover{background:var(--accent-soft);color:var(--accent)}
+
+    .btn-whatsapp-menu{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      padding:14px 18px;border-radius:12px;
+      background:linear-gradient(135deg,#128c7e,#25d366);
+      color:#fff;font-weight:600;font-size:.95rem;
+      text-decoration:none;border:none;cursor:pointer;width:100%;
+      transition:transform .2s ease,box-shadow .2s ease;
+      box-shadow:0 4px 18px rgba(37,211,102,.3);
+    }
+    .btn-whatsapp-menu:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.4)}
+
+    /* ALERTAS - CANTO INFERIOR ESQUERDO */
+    .alertas-wrapper{
+      position:absolute;bottom:30px;left:20px;z-index:80;
+      display:flex;flex-direction:column;gap:10px;width:290px;
+    }
+    .alerta{
+      background:#1a1a1a;
+      border:1px solid #2a2a2a;
+      border-radius:10px;
+      padding:13px 16px;
+      font-size:.88rem;
+      color:#e8e8e8;
+      box-shadow:0 6px 24px rgba(0,0,0,.6);
+      opacity:0;
+      transform:translateX(-28px);
+      animation:alertaLoop 20s linear infinite;
+    }
+    .alerta:nth-child(2){animation-delay:5s}
+    .alerta:nth-child(3){animation-delay:10s}
+    .alerta:nth-child(4){animation-delay:15s}
+    @keyframes alertaLoop{
+      0%{opacity:0;transform:translateX(-28px)}
+      5%{opacity:1;transform:translateX(0)}
+      22%{opacity:1;transform:translateX(0)}
+      27%{opacity:0;transform:translateX(-28px)}
+      100%{opacity:0;transform:translateX(-28px)}
+    }
+    .alerta-tag{
+      display:inline-block;padding:2px 8px;border-radius:20px;
+      background:var(--accent-soft);color:var(--accent);
+      font-size:.72rem;font-weight:700;margin-right:8px;
+      text-transform:uppercase;letter-spacing:.04em;
+    }
+    .alerta-destaque{color:var(--accent);font-weight:700}
+
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+
+    .eyebrow{
+      font-family:monospace;font-size:11px;letter-spacing:.25em;
+      text-transform:uppercase;color:var(--accent)
+    }
+
+    .selo{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 18px;border-radius:30px;
+      background:var(--accent-soft);border:1px solid var(--border-gold);
+      font-size:.82rem;color:var(--accent);font-weight:600;
+    }
+
+    .icone-card{
+      width:44px;height:44px;border-radius:12px;
+      background:var(--accent-soft);display:flex;
+      align-items:center;justify-content:center;color:var(--accent);
+      margin-bottom:16px;
+    }
+  `;
+  document.head.appendChild(s);
+})();
+</script>
+<div style="background-color:transparent;box-sizing:border-box;">
+
+<div class="page-wrapper">
+
+  <!-- PARTÍCULAS ANIMADAS -->
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+  <div class="particula"></div>
+
+  <!-- OVERLAY MENU -->
+  <div class="overlay-menu" id="overlayMenu" onclick="fecharMenu()"></div>
+
+  <!-- BOTÃO MENU -->
+  <button class="btn-menu" onclick="abrirMenu()" aria-label="Abrir menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+
+  <!-- BOTÃO WHATSAPP TOPO -->
+  <a class="btn-whatsapp-topo" href="https://wa.me/5551981528372?text=Ola%21%20Quero%20saber%20mais%20sobre%20o%20Nicho%20Black%20E-book%20Financeiro" target="_blank" title="Suporte WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- MENU LATERAL -->
+  <nav class="menu-lateral" id="menuLateral">
+    <button class="btn-fechar" onclick="fecharMenu()" aria-label="Fechar menu">X</button>
+    
+    <div style="text-align:center;margin-bottom:10px;">
+      <h3 class="font-display text-xl font-bold" style="color:var(--accent);">MENU</h3>
+      <p style="color:var(--muted);font-size:.82rem;">Nicho Black E-book</p>
+    </div>
+
+    <div style="height:1px;background:var(--border);margin:6px 0;"></div>
+
+    <a href="#" class="menu-link">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Página Inicial
+    </a>
+    <a href="#oferta" class="menu-link">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Ver Oferta
+    </a>
+    <a href="#beneficios" class="menu-link">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Benefícios
+    </a>
+
+    <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+
+    <p style="color:var(--muted);font-size:.78rem;text-align:center;margin-bottom:2px;letter-spacing:.05em;text-transform:uppercase;font-weight:600;">Suporte Prioritário</p>
+    
+    <a class="btn-whatsapp-menu" href="https://wa.me/5551981528372?text=Ola%21%20Quero%20saber%20mais%20sobre%20o%20Nicho%20Black%20E-book%20Financeiro" target="_blank">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      WhatsApp (51) 98152-8372
+    </a>
+
+    <p style="color:#666;font-size:.72rem;text-align:center;margin-top:auto;line-height:1.5;">
+      © 2026 NICHO BLACK<br>E-BOOK FINANCEIRO
+    </p>
+  </nav>
+
+  <!-- ALERTAS EM LOOP - CANTO INFERIOR ESQUERDO -->
+  <div class="alertas-wrapper">
+    <div class="alerta">
+      <span class="alerta-tag">Compra</span>
+      <span>Comprei o e-book e <span class="alerta-destaque">amei!</span> Conteúdo excelente.</span>
+    </div>
+    <div class="alerta">
+      <span class="alerta-tag">Resultado</span>
+      <span>Estou <span class="alerta-destaque">lucrando muito</span> seguindo o método!</span>
+    </div>
+    <div class="alerta">
+      <span class="alerta-tag">Ganho</span>
+      <span>Livrei esse mês quase <span class="alerta-destaque">R$ 2.000,00</span>!</span>
+    </div>
+    <div class="alerta">
+      <span class="alerta-tag">Recomendo</span>
+      <span>Melhor investimento, <span class="alerta-destaque">retorno rápido!</span></span>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="conteudo">
+    <div class="max-w-4xl mx-auto px-6 pt-28 pb-32">
+
+      <!-- HERO -->
+      <header class="reveal text-center mb-16">
+        <div class="selo mb-6">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Método Comprovado · Edição 2026
+        </div>
+        <h1 class="font-display text-5xl md:text-7xl font-bold mb-4 leading-tight">
+          <span style="color:#fff;">NICHO</span><br>
+          <span class="gradient-text">BLACK E-BOOK</span><br>
+          <span style="color:var(--accent);font-size:.7em;">FINANCEIRO</span>
+        </h1>
+        <p class="text-lg md:text-xl" style="color:var(--muted);max-width:640px;margin:0 auto 32px;line-height:1.7;">
+          Descubra como dominar um nicho lucrativo e vender e-books no piloto automático — 
+          estratégias usadas por quem já transforma conhecimento em <strong style="color:#fff;">renda real</strong>.
+        </p>
+        <div id="oferta">
+          <button class="btn-oferta" onclick="alert('Redirecionando para a página de pagamento...')">
+            Ofertas Limitadas — Compre Ainda Hoje
+          </button>
+        </div>
+        <p style="color:var(--muted);font-size:.85rem;margin-top:14px;">
+          Pagamento 100% seguro · Entrega imediata · Garantia de 7 dias
+        </p>
+      </header>
+
+      <div class="divider mb-16"></div>
+
+      <!-- BENEFÍCIOS -->
+      <section id="beneficios" class="reveal mb-16">
+        <p class="eyebrow text-center mb-3">O Que Você Vai Receber</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-center mb-12" style="color:#fff;">
+          Conteúdo <span style="color:var(--accent);">Completo</span> e Aplicável
+        </h2>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+          
+          <div class="card-hover rounded-2xl p-7" style="background:var(--card);border:1px solid var(--border);">
+            <div class="icone-card">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-2" style="color:#fff;">E-book Completo</h3>
+            <p style="color:var(--muted);line-height:1.6;font-size:.95rem;">
+              Mais de 50 páginas de conteúdo estratégico, do nicho à escala, com passo a passo prático.
+            </p>
+          </div>
+
+          <div class="card-hover rounded-2xl p-7" style="background:var(--card);border:1px solid var(--border);">
+            <div class="icone-card">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-2" style="color:#fff;">Estratégias de Venda</h3>
+            <p style="color:var(--muted);line-height:1.6;font-size:.95rem;">
+              Páginas que convertem, tráfego pago e orgânico, e gatilhos mentais poderosos.
+            </p>
+          </div>
+
+          <div class="card-hover rounded-2xl p-7" style="background:var(--card);border:1px solid var(--border);">
+            <div class="icone-card">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-2" style="color:#fff;">Resultados Rápidos</h3>
+            <p style="color:var(--muted);line-height:1.6;font-size:.95rem;">
+              Aplicando corretamente, primeiros resultados em até 30 dias de dedicação.
+            </p>
+          </div>
+
+          <div class="card-hover rounded-2xl p-7" style="background:var(--card);border:1px solid var(--border);">
+            <div class="icone-card">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold mb-2" style="color:#fff;">Garantia Total</h3>
+            <p style="color:var(--muted);line-height:1.6;font-size:.95rem;">
+              7 dias para testar. Se não gostar, devolvemos 100% do seu dinheiro.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="divider mb-16"></div>
+
+      <!-- CTA FINAL -->
+      <section class="reveal mb-16">
+        <div class="rounded-2xl p-10 md:p-14 text-center" style="background:linear-gradient(145deg,rgba(212,175,55,.08),rgba(212,175,55,.01));border:2px solid var(--border-gold);position:relative;overflow:hidden;">
+          
+          <div style="position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.18),transparent 70%);"></div>
+          <div style="position:absolute;bottom:-100px;left:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.1),transparent 70%);"></div>
+          
+          <div style="position:relative;z-index:1;">
+            <p class="eyebrow mb-4">Oferta Por Tempo Limitado</p>
+            <h3 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color:#fff;line-height:1.2;">
+              Transforme Conhecimento em <span style="color:var(--accent);">Renda Real</span>
+            </h3>
+            <p style="color:var(--muted);max-width:520px;margin:0 auto 28px;font-size:1.05rem;line-height:1.7;">
+              Não deixe essa oportunidade passar. Milhares de pessoas já estão lucrando 
+              com produtos digitais — agora é a sua vez de começar.
+            </p>
+            <button class="btn-oferta" onclick="alert('Redirecionando para a página de pagamento...')">
+              Quero Comprar Agora
+            </button>
+            <p style="margin-top:18px;font-size:.85rem;color:var(--muted);">
+              Acesso imediato após a compra · Suporte prioritário via WhatsApp
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="reveal pt-10" style="border-top:1px solid var(--border);">
+        <p class="text-center text-sm" style="color:var(--muted);">
+          © 2026 <span style="color:var(--accent);font-weight:600;">NICHO BLACK E-BOOK FINANCEIRO</span> · Todos os direitos reservados
+        </p>
+        <p class="text-center text-xs mt-2" style="color:#666;">
+          Resultados variam conforme dedicação e aplicação do método
+        </p>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function abrirMenu(){
+    document.getElementById('menuLateral').classList.add('aberto');
+    document.getElementById('overlayMenu').classList.add('visivel');
+  }
+  function fecharMenu(){
+    document.getElementById('menuLateral').classList.remove('aberto');
+    document.getElementById('overlayMenu').classList.remove('visivel');
+  }
+</script>
+</div>
+</html>
